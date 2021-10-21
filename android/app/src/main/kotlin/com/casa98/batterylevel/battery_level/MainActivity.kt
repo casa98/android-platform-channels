@@ -1,6 +1,7 @@
 package com.casa98.batterylevel.battery_level
 
 import android.content.*
+import android.graphics.Color
 import io.flutter.embedding.android.FlutterActivity
 import androidx.annotation.NonNull
 import io.flutter.embedding.engine.FlutterEngine
@@ -8,10 +9,16 @@ import io.flutter.plugin.common.MethodChannel
 import android.os.BatteryManager
 import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
+import android.os.Bundle
 
 class MainActivity: FlutterActivity() {
     private val BATTERY_CHANNEL = "com.casa98/battery"
     private lateinit var channel: MethodChannel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        window.statusBarColor = Color.TRANSPARENT;
+    }
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)

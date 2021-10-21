@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -9,8 +11,34 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late StreamSubscription _streamSubscription;
   static const batteryChannel = MethodChannel("com.casa98/battery");
-  int batteryLevel = 0;
+  static const charginChannel = EventChannel("com.casa98/charging");
+  String batteryLevel = 'Waiting Stream...';
+
+  @override
+  void didChangeDependencies() {
+    //onListenBattery();  // Returns current device battery percentage
+    onStreamBattery();
+    super.didChangeDependencies();
+  }
+
+  void onListenBattery() {
+    batteryChannel.setMethodCallHandler((call) async {
+      if (call.method == "reportBatteryLevel") {
+        final int batteryLevel = call.arguments;
+        setState(() => this.batteryLevel = '$batteryLevel');
+      }
+    });
+  }
+
+  void onStreamBattery() {
+    _streamSubscription =
+        charginChannel.receiveBroadcastStream().listen((event) {
+      print('event coming: $event');
+      setState(() => batteryLevel = '$event');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,13 +57,8 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Battery : $batteryLevel%',
+                '$batteryLevel',
                 style: Theme.of(context).textTheme.headline6,
-              ),
-              SizedBox(height: 24.0),
-              ElevatedButton(
-                onPressed: getBatteryLevel,
-                child: Text("Tap to get Battery Percentaje!"),
               ),
             ],
           ),
@@ -44,9 +67,9 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Future getBatteryLevel() async {
-    final newBatteryLevel =
-        await batteryChannel.invokeMethod("getBatteryLevel", batteryLevel);
-    setState(() => batteryLevel = newBatteryLevel);
+  @override
+  void dispose() {
+    _streamSubscription.cancel();
+    super.dispose();
   }
 }

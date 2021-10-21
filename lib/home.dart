@@ -15,6 +15,14 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {},
+          icon: Icon(Icons.arrow_back),
+          splashRadius: 20.0,
+          splashColor: Colors.transparent,
+        ),
+      ),
       body: SafeArea(
         child: Center(
           child: Column(

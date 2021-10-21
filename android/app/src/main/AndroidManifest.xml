@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.casa98.batterylevel.battery_level">
+    package="com.casa98.batterylevel">
    <application
         android:label="battery_level"
         android:icon="@mipmap/ic_launcher">

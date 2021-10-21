@@ -1,4 +1,4 @@
-package com.casa98.batterylevel.battery_level
+package com.casa98.batterylevel
 
 import android.content.*
 import android.graphics.Color

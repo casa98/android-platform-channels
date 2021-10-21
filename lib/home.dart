@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Battery level: $batteryLevel',
+                'Counter: $batteryLevel',
                 style: Theme.of(context).textTheme.headline6,
               ),
               SizedBox(height: 24.0),

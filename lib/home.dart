@@ -29,13 +29,13 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Counter: $batteryLevel',
+                'Battery : $batteryLevel%',
                 style: Theme.of(context).textTheme.headline6,
               ),
               SizedBox(height: 24.0),
               ElevatedButton(
                 onPressed: getBatteryLevel,
-                child: Text("Tap to Count!"),
+                child: Text("Tap to get Battery Percentaje!"),
               ),
             ],
           ),

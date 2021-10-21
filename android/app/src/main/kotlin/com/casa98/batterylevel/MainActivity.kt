@@ -3,7 +3,6 @@ package com.casa98.batterylevel
 import android.content.*
 import android.graphics.Color
 import io.flutter.embedding.android.FlutterActivity
-import androidx.annotation.NonNull
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 import android.os.BatteryManager
@@ -29,9 +28,15 @@ class MainActivity: FlutterActivity() {
         channel.setMethodCallHandler {call, result ->
             if(call.method == "getBatteryLevel"){
                 // Get value coming from Flutter
-                var counter = call.arguments() as Int
-                result.success(++counter)
+                val batteryLevel = getBatteryLevel()
+                result.success(batteryLevel)
             }
         }
+    }
+
+    private fun getBatteryLevel(): Int {
+        // As I target SDk >= 21, only need this code
+        val batteryManager = getSystemService(Context.BATTERY_SERVICE) as BatteryManager
+        return batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)
     }
 }
